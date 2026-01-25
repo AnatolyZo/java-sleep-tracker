@@ -2,7 +2,6 @@ package ru.yandex.practicum.sleeptracker;
 
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.sleeptracker.analiticalfunctions.MinSleepSessionFinder;
-import ru.yandex.practicum.sleeptracker.analiticalfunctions.SleepSessionsCounter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MinSleepSessionFinderTest {
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm");
+
     @Test
     public void minSleepSessionTestIfShortestSessionEquals1() {
         final List<String> sleepSessions = List.of("01.10.25 23:15;02.10.25 07:30;GOOD",
