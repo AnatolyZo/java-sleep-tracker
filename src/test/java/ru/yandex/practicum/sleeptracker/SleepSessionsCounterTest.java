@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SleepSessionsCounterTest {
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm");
+
     @Test
     public void sleepCounterTestIfNumberOfSleepSessionsEquals1() {
         final List<String> sl = List.of("01.10.25 23:15;02.10.25 07:30;GOOD");
