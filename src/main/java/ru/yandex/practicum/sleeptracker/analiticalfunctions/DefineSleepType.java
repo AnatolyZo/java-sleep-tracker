@@ -13,11 +13,11 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class DefineSleepType implements Function<List<SleepSession>, SleepTypes> {
-    SleepNightPredicate isSleepNight = new SleepNightPredicate();
-    SleepNightsCounter countSleepNights = new SleepNightsCounter();
-
     @Override
     public SleepTypes apply(List<SleepSession> sleepSessions) {
+        SleepNightPredicate isSleepNight = new SleepNightPredicate();
+        SleepNightsCounter countSleepNights = new SleepNightsCounter();
+
         //Определение количество сессий сна с хронотипом "сова":
         Function<List<SleepSession>, Long> countOwlSleepType = sessions -> sessions.stream()
                 //isSleepNight оставляет только те ночи, на которые сон приходится с 0 до 6
@@ -42,7 +42,14 @@ public class DefineSleepType implements Function<List<SleepSession>, SleepTypes>
         Optional<SleepSession> totalSleepNights = countSleepNights.apply(sleepSessions);
         int numberOfOwlSleepType = Math.toIntExact(countOwlSleepType.apply(sleepSessions));
         int numberOfLarkSleepType = Math.toIntExact(countLarkSleepType.apply(sleepSessions));
-        int numberOfPigeonSleepType = totalSleepNights.get().getSleepNightsCounter() - numberOfOwlSleepType - numberOfLarkSleepType;
+        int numberOfPigeonSleepType;
+
+        if (totalSleepNights.isPresent()) {
+            numberOfPigeonSleepType = totalSleepNights.get().getSleepNightsCounter() - numberOfOwlSleepType - numberOfLarkSleepType;
+        } else {
+            numberOfPigeonSleepType = 0;
+        }
+
         //Определяем максимальное значение из трех хронотипов
         int largestSleepType = Math.max(Math.max(numberOfOwlSleepType, numberOfLarkSleepType), numberOfPigeonSleepType);
 

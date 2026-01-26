@@ -2,20 +2,22 @@ package ru.yandex.practicum.sleeptracker.supportingfunctions;
 
 import ru.yandex.practicum.sleeptracker.SleepSession;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
 public class SleepNightsCounter implements Function<List<SleepSession>, Optional<SleepSession>> {
-    SleepSessionsEndMidnight setMidnightForSessionsEnd = new SleepSessionsEndMidnight();
-    SleepSessionsEndSixAM setSixAMForSessionsEnd = new SleepSessionsEndSixAM();
-    SleepSessionsStartMidnight setMidnightForSessionsStart = new SleepSessionsStartMidnight();
-    SleepSessionsStartSixAM setSixAMForSessionsStart = new SleepSessionsStartSixAM();
-    SleepNightPredicate isSleepNight = new SleepNightPredicate();
-
     @Override
     public Optional<SleepSession> apply(List<SleepSession> sleepSessions) {
+        Function<SleepSession, LocalDateTime> setMidnightForSessionsEnd = sleepSession ->  LocalDateTime.of(sleepSession.getSleepSessionEnd().toLocalDate(), LocalTime.MIDNIGHT);
+        Function<SleepSession, LocalDateTime> setSixAMForSessionsEnd = sleepSession ->  LocalDateTime.of(sleepSession.getSleepSessionEnd().toLocalDate(), LocalTime.MIDNIGHT.plusHours(6));
+        Function<SleepSession, LocalDateTime> setMidnightForSessionsStart = sleepSession ->  LocalDateTime.of(sleepSession.getSleepSessionStart().toLocalDate(), LocalTime.MIDNIGHT);
+        Function<SleepSession, LocalDateTime> setSixAMForSessionsStart = sleepSession ->  LocalDateTime.of(sleepSession.getSleepSessionStart().toLocalDate(), LocalTime.MIDNIGHT.plusHours(6));
+        SleepNightPredicate isSleepNight = new SleepNightPredicate();
+
         return sleepSessions.stream()
                 .filter(isSleepNight)
                 //метод reduce() предназначен для исключения ситуаций двойного подсчета количества ночных сессий сна

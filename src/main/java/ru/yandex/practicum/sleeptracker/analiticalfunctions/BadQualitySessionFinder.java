@@ -9,7 +9,7 @@ public class BadQualitySessionFinder implements Function<List<SleepSession>, Lon
     @Override
     public Long apply(List<SleepSession> sleepSessions) {
         return sleepSessions.stream()
-                .filter(session -> session.getSleepQuality().equals("BAD"))
+                .filter(session -> session.getSleepQuality().equals(SleepSession.badQuality))
                 .count();
     }
 }

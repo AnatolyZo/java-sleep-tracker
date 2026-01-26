@@ -9,8 +9,15 @@ import java.util.function.Function;
 public class AverageSleepSessionDurationFinder implements Function<List<SleepSession>, Long> {
     @Override
     public Long apply(List<SleepSession> sleepSessions) {
-        SumTotalDurationOfSleepSessions sumTotalDurationOfSleepSessions = new SumTotalDurationOfSleepSessions();
+        long averageSleepSessionDuration;
         int numberOfSleepSessions = sleepSessions.size();
-        return sumTotalDurationOfSleepSessions.apply(sleepSessions) / numberOfSleepSessions;
+        SumTotalDurationOfSleepSessions sumTotalDurationOfSleepSessions = new SumTotalDurationOfSleepSessions();
+
+        try {
+            averageSleepSessionDuration = sumTotalDurationOfSleepSessions.apply(sleepSessions) / numberOfSleepSessions;
+        } catch (ArithmeticException e) {
+            averageSleepSessionDuration = 0L;
+        }
+        return averageSleepSessionDuration;
     }
 }

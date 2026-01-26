@@ -7,6 +7,7 @@ public class SleepSession {
     private final LocalDateTime sleepSessionEnd;
     private final String sleepQuality;
     private int sleepNightsCounter = 1;
+    public static final String badQuality = "BAD";
 
     public SleepSession(LocalDateTime sleepSessionStart, LocalDateTime getSleepSessionEnd, String sleepQuality) {
         this.sleepSessionStart = sleepSessionStart;

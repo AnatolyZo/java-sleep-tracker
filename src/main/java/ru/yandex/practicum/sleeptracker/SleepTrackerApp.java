@@ -49,6 +49,7 @@ public class SleepTrackerApp {
             functionsList.add(new DefineSleepTypeCover());
         } catch (SleepLogIsEmptyException e) {
             System.out.println(e.getMessage());
+            return;
         }
 
 
