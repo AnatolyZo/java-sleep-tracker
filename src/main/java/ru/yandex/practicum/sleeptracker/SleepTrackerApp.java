@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class SleepTrackerApp {
     static final String SLEEP_LOG_DIRECTORY = "src/main/resources/sleep_log.txt";
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm");
+    public static final String SEPARATOR = ";";
 
     public static void main(String[] args) {
         List<SleepSession> sleepData = new ArrayList<>();
@@ -24,9 +25,9 @@ public class SleepTrackerApp {
         try (BufferedReader br = new BufferedReader(new FileReader(SLEEP_LOG_DIRECTORY, StandardCharsets.UTF_8))) {
             sleepData = br.lines()
                     .map(str -> {
-                        LocalDateTime sleepSessionStart = LocalDateTime.parse(str.substring(0, str.indexOf(";")), FORMATTER);
-                        LocalDateTime sleepSessionEnd = LocalDateTime.parse(str.substring(str.indexOf(";") + 1, str.lastIndexOf(";")), FORMATTER);
-                        String sleepQuality = str.substring(str.lastIndexOf(";") + 1);
+                        LocalDateTime sleepSessionStart = LocalDateTime.parse(str.substring(0, str.indexOf(SEPARATOR)), FORMATTER);
+                        LocalDateTime sleepSessionEnd = LocalDateTime.parse(str.substring(str.indexOf(SEPARATOR) + 1, str.lastIndexOf(SEPARATOR)), FORMATTER);
+                        String sleepQuality = str.substring(str.lastIndexOf(SEPARATOR) + 1);
                         return new SleepSession(sleepSessionStart, sleepSessionEnd, sleepQuality);
                     })
                     .collect(Collectors.toList());
